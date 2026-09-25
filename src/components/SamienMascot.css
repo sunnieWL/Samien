@@ -1,0 +1,48 @@
+.samien-mascot {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--samien-mascot-size);
+  height: var(--samien-mascot-size);
+  overflow: hidden;
+  vertical-align: middle;
+  background: transparent;
+}
+
+.samien-mascot--sm { --samien-mascot-size: 72px; }
+.samien-mascot--md { --samien-mascot-size: 144px; }
+.samien-mascot--lg { --samien-mascot-size: 184px; }
+
+.samien-mascot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+
+.samien-mascot--loaded img { opacity: 1; }
+
+/* Keep the visible character sizes balanced despite differing pose widths. */
+.samien-mascot--scanning img { width: 94%; height: 94%; }
+.samien-mascot--success img { width: 96%; height: 96%; }
+.samien-mascot--conflict img { width: 96%; height: 96%; }
+
+/* A small, finite bounce while the existing scan flow is active. */
+.scan-dialog .samien-mascot--scanning.samien-mascot--loaded img {
+  animation: samien-scan-bounce 650ms ease-in-out 2;
+  transform-origin: 50% 85%;
+}
+
+@keyframes samien-scan-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-7px) scale(1.035); }
+  72% { transform: translateY(0) scale(.985); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .samien-mascot img { transition: none; }
+  .scan-dialog .samien-mascot--scanning img { animation: none; }
+}

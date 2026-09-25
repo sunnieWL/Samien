@@ -1,0 +1,57 @@
+.calendar-panel .fc .event-teaching {
+  background: #e9edf8;
+  border: 1px solid #93a6c8;
+  color: #31476d;
+}
+
+.calendar-panel .fc .event-teaching .calendar-event em {
+  color: #435a7d;
+}
+
+.calendar-legend .legend-teaching {
+  background: #e9edf8;
+  border: 1px solid #93a6c8;
+}
+
+.calendar-panel .calendar-legend {
+  height: auto;
+  min-height: 45px;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  padding: 8px 13px;
+}
+
+.calendar-agenda h3 small {
+  color: #75847c;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.agenda-item--teaching {
+  border-left: 3px solid #93a6c8;
+  padding-left: 10px;
+}
+
+.teaching-event-detail {
+  display: grid;
+  gap: 5px;
+  margin: 0 11px 12px;
+  padding: 11px 13px;
+  border: 1px solid #b8c4dc;
+  border-radius: 7px;
+  background: #f5f7fc;
+  color: #304569;
+  font-size: 12px;
+}
+
+.teaching-event-detail .icon-button {
+  justify-self: end;
+  margin: -6px -8px -16px 0;
+}
+
+.teaching-event-detail strong { font-size: 14px; }
+.teaching-event-detail small { color: #62728f; }
+
+@media (max-width: 760px) {
+  .teaching-event-detail { margin: 0 14px 12px; }
+}
