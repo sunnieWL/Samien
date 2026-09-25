@@ -20,7 +20,7 @@ type ScanStep = 'scanning' | 'classifying' | 'done' | null
 type SuccessNotice = { action: 'signed' | 'accepted'; ids: string[] } | null
 
 const STORAGE_KEY = 'samien-demo-v4'
-const SOURCE_BASE = '/docs/'
+const SOURCE_BASE = `${import.meta.env.BASE_URL}docs/`
 const defaultRecord = (): RecordState => ({ action: 'pending', at: null, decision: null })
 const fullStore = (): Store => ({ version: 4, records: Object.fromEntries(documents.map(doc => [doc.id, defaultRecord()])), rescheduleRequests: [] })
 const emptyStore = (): Store => ({ version: 4, records: {}, rescheduleRequests: [] })

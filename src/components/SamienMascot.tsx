@@ -12,7 +12,7 @@ export interface SamienMascotProps {
 
 /** The surrounding status text supplies the accessible description. */
 export function SamienMascot({ variant, size = 'md', className }: SamienMascotProps) {
-  const source = `/mascot/${variant}.png`
+  const source = `${import.meta.env.BASE_URL}mascot/${variant}.png`
   const [loadedSource, setLoadedSource] = useState<string | null>(null)
   const [unavailableSource, setUnavailableSource] = useState<string | null>(null)
 
