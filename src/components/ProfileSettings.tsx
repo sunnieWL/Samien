@@ -1,10 +1,13 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { CalendarDays, Mail, Settings2, X } from 'lucide-react'
+import { CalendarDays, Mail, RotateCcw, Settings2, X } from 'lucide-react'
 import './ProfileSettings.css'
 
 type ProfileSettingsProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
+  gmailConnected: boolean
+  onConnectGmail: () => void
+  onResetDemo: () => void
 }
 
 const connections = [
@@ -20,7 +23,7 @@ const connections = [
   },
 ] as const
 
-export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
+export function ProfileSettings({ open, onOpenChange, gmailConnected, onConnectGmail, onResetDemo }: ProfileSettingsProps) {
   return <Dialog.Root open={open} onOpenChange={onOpenChange}>
     <Dialog.Portal>
       <Dialog.Overlay className="profile-settings-overlay" />
@@ -54,10 +57,16 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                 <strong>{name}</strong>
                 <span>{description}</span>
               </div>
-              <span className="profile-settings-connection-status">ยังไม่เชื่อมต่อ</span>
+              {name === 'Gmail' && !gmailConnected ? <button type="button" className="profile-settings-connect-button" onClick={onConnectGmail}>เชื่อมต่อ</button> : <span className="profile-settings-connection-status connected">เชื่อมต่อแล้ว · เดโม</span>}
             </div>)}
           </div>
-          <p className="profile-settings-demo-note">การเชื่อมต่อบัญชีเป็นแนวทางสำหรับผลิตภัณฑ์จริง ขณะนี้ Samien ใช้ข้อมูลเอกสารตัวอย่างและปฏิทินจำลองภายในแอป</p>
+          <p className="profile-settings-demo-note">สถานะการเชื่อมต่อเป็นการจำลองในแอป ไม่ได้เข้าถึง Gmail หรือ Google Calendar จริง และไม่มีการส่งอีเมล</p>
+        </section>
+
+        <section className="profile-settings-reset" aria-labelledby="profile-settings-reset-title">
+          <h3 id="profile-settings-reset-title">เริ่มเดโมใหม่</h3>
+          <p>ล้างเอกสารที่สแกน สถานะการดำเนินการ และการเชื่อมต่อ Gmail จำลอง แล้วกลับไปเริ่มจากกล่องว่าง</p>
+          <button type="button" className="profile-settings-reset-button" onClick={() => { onResetDemo(); onOpenChange(false) }}><RotateCcw size={16} />รีเซ็ตเดโม</button>
         </section>
       </Dialog.Content>
     </Dialog.Portal>
