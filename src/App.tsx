@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { MouseEvent, PointerEvent } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as Checkbox from '@radix-ui/react-checkbox'
-import { Bell, CalendarDays, Check, CheckCheck, ChevronRight, FileCheck2, FileText, FolderClosed, Info, Menu, PenLine, ScanLine, Search, X } from 'lucide-react'
+import { Bell, CalendarDays, Check, CheckCheck, ChevronRight, FileCheck2, FileText, FolderClosed, Info, Menu, PenLine, RotateCcw, ScanLine, Search, X } from 'lucide-react'
 import { documents, type DocumentFixture } from './data/documents'
 import { Badge } from './components/ui/badge'
 import { Button } from './components/ui/button'
@@ -118,8 +118,21 @@ function SignatureDialog({ docs, onClose, onComplete }: { docs: DocumentFixture[
   const start = (e: PointerEvent<HTMLCanvasElement>) => { e.currentTarget.setPointerCapture(e.pointerId); drawing.current = true; const p = point(e); const ctx = canvas.current?.getContext('2d'); ctx?.beginPath(); ctx?.moveTo(p.x, p.y) }
   const move = (e: PointerEvent<HTMLCanvasElement>) => { if (!drawing.current) return; const p = point(e); const ctx = canvas.current?.getContext('2d'); ctx?.lineTo(p.x, p.y); ctx?.stroke(); drew.current = true; setHasInk(true) }
   const stop = () => { drawing.current = false }
-  const clear = () => { const node = canvas.current; node?.getContext('2d')?.clearRect(0, 0, node.width, node.height); drew.current = false; setHasInk(false) }
-  return <Dialog.Root open onOpenChange={open => { if (!open) onClose() }}><Dialog.Portal><Dialog.Overlay className="dialog-overlay" /><Dialog.Content className="dialog-content"><div className="dialog-title-row"><div><Dialog.Title>ลงนาม {docs.length} ฉบับ</Dialog.Title><Dialog.Description>ตรวจผลการพิจารณาแต่ละฉบับ แล้ววาดลายเซ็นจำลอง</Dialog.Description></div><Dialog.Close className="icon-button" aria-label="ปิด"><X size={20} /></Dialog.Close></div><div className="decision-list">{docs.map(doc => <label key={doc.id}><strong>{doc.title}</strong><select value={decisions[doc.id]} onChange={e => setDecisions({ ...decisions, [doc.id]: e.target.value })}>{(doc.decisionOptions ?? ['ลงนาม']).map(option => <option key={option} value={option}>{option}</option>)}</select></label>)}</div><div className="signature-label"><strong>ลายเซ็น</strong><button className="button button-plain" onClick={clear}>ล้างลายเซ็น</button></div><canvas ref={canvas} className="signature-canvas" onPointerDown={start} onPointerMove={move} onPointerUp={stop} onPointerCancel={stop} aria-label="พื้นที่วาดลายเซ็น" /><p className="prototype-note"><Info size={15} />เป็นลายเซ็นจำลองสำหรับ prototype ไม่แก้ PDF หรือส่งเอกสารจริง</p><div className="dialog-footer"><button className="button button-secondary" onClick={onClose}>ยกเลิก</button><button className="button button-primary" disabled={!hasInk || !drew.current} onClick={() => onComplete(decisions)}>บันทึกการลงนามจำลอง</button></div></Dialog.Content></Dialog.Portal></Dialog.Root>
+  const clear = () => {
+    const node = canvas.current
+    const ctx = node?.getContext('2d')
+    if (node && ctx) {
+      ctx.save()
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.clearRect(0, 0, node.width, node.height)
+      ctx.restore()
+      ctx.beginPath()
+    }
+    drawing.current = false
+    drew.current = false
+    setHasInk(false)
+  }
+  return <Dialog.Root open onOpenChange={open => { if (!open) onClose() }}><Dialog.Portal><Dialog.Overlay className="dialog-overlay" /><Dialog.Content className="dialog-content"><div className="dialog-title-row"><div><Dialog.Title>ลงนาม {docs.length} ฉบับ</Dialog.Title><Dialog.Description>ตรวจผลการพิจารณาแต่ละฉบับ แล้ววาดลายเซ็นจำลอง</Dialog.Description></div><Dialog.Close className="icon-button" aria-label="ปิด"><X size={20} /></Dialog.Close></div><div className="decision-list">{docs.map(doc => <label key={doc.id}><strong>{doc.title}</strong><select value={decisions[doc.id]} onChange={e => setDecisions({ ...decisions, [doc.id]: e.target.value })}>{(doc.decisionOptions ?? ['ลงนาม']).map(option => <option key={option} value={option}>{option}</option>)}</select></label>)}</div><div className="signature-label"><strong>ลายเซ็น</strong><button type="button" className="button button-secondary" onClick={clear} disabled={!hasInk} aria-label="ล้างลายเซ็นเพื่อเขียนใหม่"><RotateCcw size={16} />เขียนใหม่</button></div><canvas ref={canvas} className="signature-canvas" onPointerDown={start} onPointerMove={move} onPointerUp={stop} onPointerCancel={stop} aria-label="พื้นที่วาดลายเซ็น" /><p className="prototype-note"><Info size={15} />เป็นลายเซ็นจำลองสำหรับ prototype ไม่แก้ PDF หรือส่งเอกสารจริง</p><div className="dialog-footer"><button className="button button-secondary" onClick={onClose}>ยกเลิก</button><button className="button button-primary" disabled={!hasInk || !drew.current} onClick={() => onComplete(decisions)}>บันทึกการลงนามจำลอง</button></div></Dialog.Content></Dialog.Portal></Dialog.Root>
 }
 
 
