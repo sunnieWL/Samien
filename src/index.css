@@ -124,3 +124,9 @@
   .scan-dialog .scan-mascot { --samien-mascot-size: 120px; }
   .conflict-with-mascot .samien-mascot { --samien-mascot-size: 56px; }
 }
+
+/* Compact brand portrait: the mascot stays decorative and never displaces navigation. */
+.brand { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 84px; padding: 17px 16px 17px 8px; }
+.brand img { display: block; width: 50px; height: 50px; flex: none; object-fit: contain; }
+.brand > div { min-width: 0; }
+.brand span { font-size: 29px; }

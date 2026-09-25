@@ -58,7 +58,7 @@ function Sidebar({ section, setSection, records, collapsed, setCollapsed }: { se
   return <>
     {collapsed && <button className="mobile-scrim" aria-label="ปิดเมนู" onClick={() => setCollapsed(false)} />}
     <aside className={`sidebar ${collapsed ? 'sidebar-open' : ''}`}>
-      <div className="brand"><span>Samien</span><small>เอกสารเป็นเรื่องง่าย<br />ให้คุณได้สอนอย่างสบายใจ</small></div>
+      <div className="brand"><img src={`${import.meta.env.BASE_URL}mascot/brand.png`} alt="" width="50" height="50" /><div><span>Samien</span><small>เอกสารเป็นเรื่องง่าย<br />ให้คุณได้สอนอย่างสบายใจ</small></div></div>
       <nav aria-label="เมนูหลัก">{items.map((item, i) => <button key={item.id} className={`nav-item ${section === item.id ? 'active' : ''} ${i === 3 ? 'nav-separated' : ''}`} onClick={() => { setSection(item.id); setCollapsed(false) }}><item.icon size={20} strokeWidth={1.8} /><span>{item.label}</span><span className="nav-count">{item.count}</span></button>)}</nav>
       <div className="sidebar-user"><div className="avatar">ส</div><div><strong>อาจารย์ ดร.สอนดี ใจดี</strong><small>คณะอักษรศาสตร์</small></div></div>
       <button type="button" className="profile-trigger" aria-label="เปิดตั้งค่าโปรไฟล์" onClick={() => { setCollapsed(false); setProfileOpen(true) }} />
