@@ -130,5 +130,3 @@
 .brand img { display: block; width: 50px; height: 50px; flex: none; object-fit: contain; }
 .brand > div { min-width: 0; }
 .brand span { font-size: 29px; }
-
-.signature-label { margin-bottom: 10px; }
