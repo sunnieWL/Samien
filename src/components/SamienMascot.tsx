@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './SamienMascot.css'
 
-export type SamienMascotVariant = 'welcome' | 'scanning' | 'success' | 'conflict'
+export type SamienMascotVariant = 'welcome' | 'scanning' | 'success' | 'conflict' | 'print'
 export type SamienMascotSize = 'sm' | 'md' | 'lg'
 
 export interface SamienMascotProps {

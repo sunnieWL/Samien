@@ -29,6 +29,7 @@
 .samien-mascot--scanning img { width: 94%; height: 94%; }
 .samien-mascot--success img { width: 96%; height: 96%; }
 .samien-mascot--conflict img { width: 96%; height: 96%; }
+.samien-mascot--print img { width: 96%; height: 96%; }
 
 /* A small, finite bounce while the existing scan flow is active. */
 .scan-dialog .samien-mascot--scanning.samien-mascot--loaded img {
